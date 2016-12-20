@@ -17,6 +17,8 @@ unsigned long last_fps;
 
 void setPin(byte pin, byte val);
 void pinMode(byte pin, byte val);
+byte getPin(byte pin);
+
 unsigned long millis();
 void init_timers();
 float get_fps();

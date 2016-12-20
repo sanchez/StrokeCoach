@@ -50,6 +50,26 @@ void setPin(byte pin, byte val) {
     }
 }
 
+byte getPin(byte pin) {
+    byte bit = pin % 10;
+    byte regNum = pin / 10;
+    byte result = 0;
+
+    if (regNum == 2) {
+        result = PINB & (1 << bit);
+    } else if (regNum == 3) {
+        result =  PINC & (1 << bit);
+    } else if (regNum == 4) {
+        result = PIND & (1 << bit);
+    }
+
+    if (result) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
 unsigned long millis() {
     uint32_t rt;
     cli();

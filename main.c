@@ -7,6 +7,7 @@
 #include <util/delay.h>
 #include "util.h"
 #include "lcd.h"
+#include "buttons.h"
 
 void status_led(byte value) {
     //PORTB = (PORTB & 0xDF) | (value << 5);
@@ -17,6 +18,7 @@ int main(void) {
     //DDRB = 0x20; // setup the led as output
     //PINMODE(25, 1);
     init_timers();
+    init_buttons();
     pinMode(25, 1);
     lcd_init();
     clear();
@@ -29,7 +31,12 @@ int main(void) {
         //_delay_ms(1000);
         //status_led(0);
         //_delay_ms(1000);
+        status_led(1);
         setCursor(0, 0);
         lcd_printf("Hello %.2f", get_fps());
+        setCursor(0, 1);
+        lcd_printf("%d %d", while_red_button(), while_black_button());
+        status_led(0);
+        //_delay_ms(100);
     }
 }

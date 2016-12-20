@@ -1,4 +1,4 @@
-SOURCES=lcd.c main.c util.c
+SOURCES=lcd.c main.c util.c buttons.c
 
 all: program
 	@echo "Compiling and uploading"

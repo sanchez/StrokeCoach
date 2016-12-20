@@ -1,9 +1,5 @@
 #include "util.h"
 
-#include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
-
 void pinMode(byte pin, byte val) {
     byte bit = pin % 10;
     byte regNum = pin / 10;
@@ -102,4 +98,21 @@ float get_fps() {
     float diff = (float) (millis() - last_fps);
     last_fps = millis();
     return 1000.0/diff;
+}
+
+void init_adc() {
+    ADCSRA = (1 << ADEN);
+}
+
+// Takes 13 cycles to read input
+uint16_t read_adc(byte addr) {
+    ADMUX = (addr & 0x0F);
+    ADCSRA |= (1 << ADPS1) | (1 << ADPS2) | (1 << ADPS2);
+
+    ADCSRA |= (1 << ADSC); // Start the converion
+    while (ADCSRA & (1 << ADSC));
+    // byte lowResult = ADCL;
+    // uint16_t highResult = ADCH;
+    // uint16_t result = (highResult << 2) | lowResult;
+    return ADC;
 }
